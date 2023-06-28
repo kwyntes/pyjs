@@ -1,0 +1,1 @@
+let a=document.querySelector("#myinput");if(a.value==="hello"){a.value="hi there";}else if(a.value.startsWith("i'm ")){a.value="hi "+a.value.substring(4)+", i'm dad";console.log("i can also do math btw:",Math.floor(Math.pow(a.value.length,7)/4)>(127-(a.value.charAt(0)/1.5)));}

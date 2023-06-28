@@ -1,0 +1,32 @@
+# how it should work i think..
+
+# (im not sure if heap is the correct term here...)
+
+its supposed to be like a named/keyed stack or something like that
+
+
+x=prompt('...')
+
+# on heap?:  {a:_jsfncall('prompt', ['...'])}
+
+y=parseInt(x, 10)**7
+
+# on heap?:  {a:_jsfncall('prompt', ['...']), b:_jspow(_jsfncall('parseInt', [##Ref(a), 10]), 7)}
+
+alert('A' + x + 'B' + y)
+
+# on heap?:  {a:_jsfncall('prompt', ['...']), b:_jspow(_jsfncall('parseInt', [##Ref(a), 10]), 7), c:_jsfncall('alert', [_jsstrconcat(['A', ##Ref(a), 'B', ##Ref(b)])])}
+
++meta info:   a._usecount = 2
+              b._usecount = 1
+              c._usecount = 0
+
+
+Now because `c` is not used anywhere  (not because it is the last on the stack!),  it is considered a terminal and code will be generated from there.
+
+
+so it will go like:
+
+1-   {at a, _usecount>=2}-->[gen]       let a=prompt('...');
+2-   {at b, _usecount==1}-->[skip]      
+3-   {at c, _usecount==0}-->[+append]   alert('A'+a+'B'+Math.pow(parseInt(a,10),7))
