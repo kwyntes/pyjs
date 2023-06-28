@@ -21,6 +21,14 @@ def func():
             4 > 127 - elem.value.charAt(0) / 1.5)
 
 print(codegen(func))
+
+# or use codegen as a decorator:
+
+@codegen
+def func():
+  ...
+
+print(func)
 ```
 
 outputs:
